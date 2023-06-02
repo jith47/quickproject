@@ -1,0 +1,26 @@
+<?php
+
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class SkillFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+         /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+        return [
+            'name' => $this->faker->name(),
+            'slug' => $this->faker->unique(),
+        ];
+    }
+}
