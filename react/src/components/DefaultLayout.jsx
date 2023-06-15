@@ -1,6 +1,7 @@
 import { Link, Navigate, Outlet } from "react-router-dom";
 import { useStateContext } from "../context/ContextProvider";
 import { MDBContainer } from 'mdb-react-ui-kit';
+import axiosClient from '../axios-client';
 
 export default function DefaultLayout() {
   const { user, token } = useStateContext();
@@ -8,6 +9,18 @@ export default function DefaultLayout() {
   if (!token) {
     return <Navigate to="/login" />;
   }
+
+  const setCsrfToken = async () => {
+    try {
+      const response = await axiosClient.get('/sanctum/csrf-cookie');
+      axiosClient.defaults.headers.common['X-XSRF-TOKEN'] = response.data.csrfToken;
+    } catch (error) {
+      console.error('Error setting CSRF token:', error);
+    }
+  };
+  
+  // Call the setCsrfToken function before making any other Axios requests
+  setCsrfToken();
 
   const onLogout = (ev) => {
     ev.preventDefault();

@@ -62,7 +62,7 @@
 
 
 //design 2
-import React from 'react';
+import { React, useRef } from 'react';
 import {
   MDBBtn,
   MDBRow,
@@ -75,11 +75,35 @@ import {
 from 'mdb-react-ui-kit';
 import '../css/Login.css';
 import { Link, Navigate, Outlet } from "react-router-dom";
+import axiosClient from '../axios-client';
+import { useStateContext } from '../context/ContextProvider';
 
 
 function App() {
+  const emailRef = useRef()
+  const passwordRef = useRef()
+
+  const {setUser, setToken} = useStateContext()
   const onSubmit = (e) => {
     e.preventDefaullt();
+    const payload = {
+      name: emailRef.current.value,
+      password: passwordRef.current.value
+  }
+
+  axiosClient.post('/login', payload)
+  .then(({data}) => {
+      setUser(data.user)
+      setToken(data.token)
+  })
+  .catch(err => {
+      const response = err.response;
+      if (response && response.status == 422) {
+          console.log('Invalid input');
+      } else {
+        console.log(err);
+      }
+  })
   }
   return (
     <form onSubmit={onSubmit}>
@@ -92,8 +116,8 @@ function App() {
 
               <h2 className="fw-bold mb-2 text-uppercase">Login</h2>
               <p className="text-white-50 mb-5">Please enter your login and password!</p>
-              <MDBInput wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='Email address' id='formControlLg' type='email' size="lg"/>
-              <MDBInput wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='Password' id='formControlLg' type='password' size="lg"/>
+              <MDBInput ref={emailRef} wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='Email address' id='formControlLg' type='email' size="lg"/>
+              <MDBInput ref={passwordRef} wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='Password' id='formControlLg' type='password' size="lg"/>
               <p className="small mb-3 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
               <MDBBtn outline className='mx-2 px-5' color='white' size='lg'>
                 Login

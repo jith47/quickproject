@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useRef } from 'react';
 import {
   MDBBtn,
   MDBContainer,
@@ -20,6 +20,13 @@ function Signup() {
     const pConfirmRef = useRef()
 
     const {setUser, setToken} = useStateContext()
+    axiosClient.get('/sanctum/csrf-cookie')
+      .then(response => {
+        // CSRF cookie is set in the browser's cookie storage
+      })
+      .catch(error => {
+        console.error('Error setting CSRF cookie:', error);
+      });
 
     const onSignup = (e) => {
         e.preventDefault()
@@ -27,7 +34,7 @@ function Signup() {
             name: nameRef.current.value,
             email: emailRef.current.value,
             password: passwordRef.current.value,
-            pConfirm: pConfirmRef.current.value,
+            password_confirmation: pConfirmRef.current.value,
         }
 
         axiosClient.post('/signup', payload)
@@ -38,7 +45,9 @@ function Signup() {
         .catch(err => {
             const response = err.response;
             if (response && response.status == 422) {
-                toastr
+                console.log('Invalid input');
+            } else {
+              console.log(err);
             }
         })
     }
