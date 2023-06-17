@@ -79,7 +79,7 @@ import axiosClient from '../axios-client';
 import { useStateContext } from '../context/ContextProvider';
 
 
-function App() {
+function Login() {
   const emailRef = useRef()
   const passwordRef = useRef()
 
@@ -87,23 +87,23 @@ function App() {
   const onSubmit = (e) => {
     e.preventDefaullt();
     const payload = {
-      name: emailRef.current.value,
+      email: emailRef.current.value,
       password: passwordRef.current.value
-  }
+    }
 
-  axiosClient.post('/login', payload)
-  .then(({data}) => {
-      setUser(data.user)
-      setToken(data.token)
-  })
-  .catch(err => {
-      const response = err.response;
-      if (response && response.status == 422) {
-          console.log('Invalid input');
-      } else {
-        console.log(err);
-      }
-  })
+    axiosClient.post('/login', payload)
+    .then(({data}) => {
+        setUser(data.user)
+        setToken(data.token)
+    })
+    .catch(err => {
+        const response = err.response;
+        if (response && response.status == 422) {
+            console.log('Invalid input');
+        } else {
+          console.log(err);
+        }
+    })
   }
   return (
     <form onSubmit={onSubmit}>
@@ -150,4 +150,4 @@ function App() {
 
   );
 }
-export default App;
+export default Login;

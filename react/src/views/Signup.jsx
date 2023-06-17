@@ -19,24 +19,20 @@ function Signup() {
     const passwordRef = useRef()
     const pConfirmRef = useRef()
 
+    // const getToken = async () => {
+    //   await axiosClient.get('/sanctum/csrf-cookie');
+    // }
     const {setUser, setToken} = useStateContext()
-    axiosClient.get('/sanctum/csrf-cookie')
-      .then(response => {
-        // CSRF cookie is set in the browser's cookie storage
-      })
-      .catch(error => {
-        console.error('Error setting CSRF cookie:', error);
-      });
 
-    const onSignup = (e) => {
-        e.preventDefault()
+    const onSignup = async (e) => {
+        e.preventDefault();
         const payload = {
             name: nameRef.current.value,
             email: emailRef.current.value,
             password: passwordRef.current.value,
             password_confirmation: pConfirmRef.current.value,
         }
-
+        // await getToken();
         axiosClient.post('/signup', payload)
         .then(({data}) => {
             setUser(data.user)

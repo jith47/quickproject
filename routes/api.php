@@ -15,15 +15,17 @@ use App\Http\Controllers\Api\AuthController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('/tokens/create', function (Request $request) {
+    $token = $request->user()->createToken($request->token_name);
+ 
+    return ['token' => $token->plainTextToken];
+});
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/signup', [AuthController::class, 'signup']);
-// Route::get('/signup', function (Request $request) {
-//     return response()->json(['csrf_token' => csrf_token()]);
-// });
 
-Route::get('/sanctum/csrf-cookie', function (Request $request) {
-    return response()->json(['message' => 'CSRF cookie set']);
-});
+// Route::get('/sanctum/csrf-cookie', function (Request $request) {
+//     return response()->json(['message' => 'CSRF cookie set']);
+// });
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {

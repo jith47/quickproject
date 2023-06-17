@@ -10,17 +10,17 @@ export default function DefaultLayout() {
     return <Navigate to="/login" />;
   }
 
-  const setCsrfToken = async () => {
-    try {
-      const response = await axiosClient.get('/sanctum/csrf-cookie');
-      axiosClient.defaults.headers.common['X-XSRF-TOKEN'] = response.data.csrfToken;
-    } catch (error) {
-      console.error('Error setting CSRF token:', error);
-    }
-  };
+  // const setCsrfToken = async () => {
+  //   try {
+  //     const response = await axiosClient.get('/sanctum/csrf-cookie');
+  //     axiosClient.defaults.headers.common['X-XSRF-TOKEN'] = response.data.csrfToken;
+  //   } catch (error) {
+  //     console.error('Error setting CSRF token:', error);
+  //   }
+  // };
   
   // Call the setCsrfToken function before making any other Axios requests
-  setCsrfToken();
+  // setCsrfToken();
 
   const onLogout = (ev) => {
     ev.preventDefault();
