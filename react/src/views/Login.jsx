@@ -62,7 +62,7 @@
 
 
 //design 2
-import { React, useRef } from 'react';
+import { React, useRef, useState } from 'react';
 import {
   MDBBtn,
   MDBRow,
@@ -83,9 +83,11 @@ function Login() {
   const emailRef = useRef()
   const passwordRef = useRef()
 
+  const [errors, setErrors] = useState()
   const {setUser, setToken} = useStateContext()
+
   const onSubmit = (e) => {
-    e.preventDefaullt();
+    // e.preventDefaullt();
     const payload = {
       email: emailRef.current.value,
       password: passwordRef.current.value
@@ -106,7 +108,7 @@ function Login() {
     })
   }
   return (
-    <form onSubmit={onSubmit}>
+    <form>
 
       <MDBRow className='d-flex justify-content-center align-items-center h-100'>
         <MDBCol col='12'>
@@ -119,7 +121,7 @@ function Login() {
               <MDBInput ref={emailRef} wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='Email address' id='formControlLg' type='email' size="lg"/>
               <MDBInput ref={passwordRef} wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='Password' id='formControlLg' type='password' size="lg"/>
               <p className="small mb-3 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
-              <MDBBtn outline className='mx-2 px-5' color='white' size='lg'>
+              <MDBBtn type="button" onClick={onSubmit} outline className='mx-2 px-5' color='white' size='lg'>
                 Login
               </MDBBtn>
 

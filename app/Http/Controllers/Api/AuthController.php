@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\LoginReuqest;
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignupRequest;
+use Auth;
 
 class AuthController extends Controller
 {
-    public function login(LoginReuqest $request)
+    public function login(LoginRequest $request)
     {
         $credentials = $request->validated();
     
@@ -18,7 +19,10 @@ class AuthController extends Controller
             $user = Auth::user();
             $token = $user->createToken('main')->plainTextToken;
     
-            return response()->json(['token' => $token]);
+            return response()->json([
+                'user' => $user,
+                'token' => $token
+            ]);
         } else {
             return response()->json('Incorrect login credentials', 200);
         }
@@ -44,12 +48,8 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $user = $request->user();
-        $user->currentAccessToken()->delete();
+        $user->tokens()->delete();
 
         return response()->json('', 204);
     }
-    // public function Auth::logout()
-    // {
-
-    // }
 }

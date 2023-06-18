@@ -2,9 +2,10 @@ import { Link, Navigate, Outlet } from "react-router-dom";
 import { useStateContext } from "../context/ContextProvider";
 import { MDBContainer } from 'mdb-react-ui-kit';
 import axiosClient from '../axios-client';
+import { useEffect } from "react";
 
 export default function DefaultLayout() {
-  const { user, token } = useStateContext();
+  const { user, token, setUser, setToken } = useStateContext();
 
   if (!token) {
     return <Navigate to="/login" />;
@@ -22,8 +23,21 @@ export default function DefaultLayout() {
   // Call the setCsrfToken function before making any other Axios requests
   // setCsrfToken();
 
+
+  useEffect(() => {
+    axiosClient.get('/user')
+    .then(({data}) => {
+      setUser(data)
+    })
+  }, [])
+
   const onLogout = (ev) => {
     ev.preventDefault();
+    axiosClient.post('/logout')
+        .then(() => {
+            setUser({})
+            setToken(null)
+        })
   }
   return (
     <div id="defaultLayout">

@@ -1,4 +1,4 @@
-import { React, useRef } from 'react';
+import { React, useRef, useState } from 'react';
 import {
   MDBBtn,
   MDBContainer,
@@ -22,6 +22,7 @@ function Signup() {
     // const getToken = async () => {
     //   await axiosClient.get('/sanctum/csrf-cookie');
     // }
+    const [errors, setErrors] = useState()
     const {setUser, setToken} = useStateContext()
 
     const onSignup = async (e) => {
@@ -32,20 +33,20 @@ function Signup() {
             password: passwordRef.current.value,
             password_confirmation: pConfirmRef.current.value,
         }
-        // await getToken();
-        axiosClient.post('/signup', payload)
-        .then(({data}) => {
-            setUser(data.user)
-            setToken(data.token)
-        })
-        .catch(err => {
+
+        axiosClient.post('/logout', payload)
+          .then(({data}) => {
+              setUser(null)
+              setToken(null)
+          })
+          .catch(err => {
             const response = err.response;
             if (response && response.status == 422) {
                 console.log('Invalid input');
             } else {
               console.log(err);
             }
-        })
+          })
     }
   return (
     <form onSubmit={onSignup}>
