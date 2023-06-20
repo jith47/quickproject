@@ -15,7 +15,11 @@
     "js-cookie": "^3.0.5",
     "mdb-react-ui-kit": "^6.1.0",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.7.4",
+    "react-chartjs-2": "^5.2.0",
+    "react-datepicker": "^4.14.1",
     "react-dom": "^18.2.0",
+    "react-i18next": "^13.0.0",
     "react-router-dom": "^6.11.2",
     "toastr": "^2.1.4"
   },
