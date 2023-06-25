@@ -8,7 +8,7 @@ import {
   MDBCheckbox
 }
 from 'mdb-react-ui-kit';
-import '../css/Signup.css';
+// import '../css/Signup.css';
 import axiosClient from '../axios-client';
 import { useStateContext } from '../context/ContextProvider';
 

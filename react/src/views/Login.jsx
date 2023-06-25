@@ -73,7 +73,7 @@ import {
   MDBIcon
 }
 from 'mdb-react-ui-kit';
-import '../css/Login.css';
+// import styles from '../css/Login.css';
 import { Link, Navigate, Outlet } from "react-router-dom";
 import axiosClient from '../axios-client';
 import { useStateContext } from '../context/ContextProvider';
@@ -87,7 +87,7 @@ function Login() {
   const {setUser, setToken} = useStateContext()
 
   const onSubmit = (e) => {
-    // e.preventDefaullt();
+    e.preventDefault();
     const payload = {
       email: emailRef.current.value,
       password: passwordRef.current.value
@@ -108,6 +108,7 @@ function Login() {
     })
   }
   return (
+    
     <form>
 
       <MDBRow className='d-flex justify-content-center align-items-center h-100'>

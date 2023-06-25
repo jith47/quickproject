@@ -7,6 +7,7 @@ import GuestLayout from "./components/GuestLayout.jsx";
 import DefaultLayout from "./components/DefaultLayout.jsx";
 import Dashboard from "./views/Dashboard.jsx";
 import UserForm from "./views/Userform.jsx";
+import Sidebar from "./views/sidebar/Sidebar.jsx";
 
 const router = createBrowserRouter([
     // {
@@ -16,13 +17,25 @@ const router = createBrowserRouter([
     {
         path: '/',
         element: <DefaultLayout />,
+        layout: '/admin',
         children: [
             {
-                path:'/',
-                element: <Navigate to="/users" />
+                name: 'Dashboard',
+                path: '/dashboard',
+                cat: 1,
+                icon: <i class="fas fa-home" ></i>,
+                element: <Dashboard />
             },
             {
+                name: 'Dashbboard',
+                path:'/',
+                element: <Navigate to="/dashboard" />
+            },
+            {
+                name: 'Users',
                 path: '/users',
+                cat: 1, //sidebar
+                icon: <i class="fas fa-users"></i>,
                 element: <Users />
             },
             {
@@ -33,10 +46,12 @@ const router = createBrowserRouter([
                 path: '/users/:id',
                 element: <UserForm key="userUpdate"/>
             },
-            {
-                path: '/dashboard',
-                element: <Dashboard />
-            },
+
+            // {
+            //     path : '/sidebar',
+            //     element: <Sidebar />
+            //     // component: Sidebar,
+            // }
             
         ]
     },
@@ -56,7 +71,7 @@ const router = createBrowserRouter([
             {
                 path: '*',
                 element: <NotFound />
-            }
+            },
         ]
     }
 ])
