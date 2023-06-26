@@ -7,7 +7,9 @@ import GuestLayout from "./components/GuestLayout.jsx";
 import DefaultLayout from "./components/DefaultLayout.jsx";
 import Dashboard from "./views/Dashboard.jsx";
 import UserForm from "./views/Userform.jsx";
-import Sidebar from "./views/sidebar/Sidebar.jsx";
+// import Sidebar from "./views/sidebar/Sidebar.jsx";
+import Settings from "/src/views/admin/dataTables/index.jsx";
+
 
 const router = createBrowserRouter([
     // {
@@ -36,7 +38,8 @@ const router = createBrowserRouter([
                 path: '/users',
                 cat: 1, //sidebar
                 icon: <i class="fas fa-users"></i>,
-                element: <Users />
+                // element: <Users />,
+                element: <DataTables />
             },
             {
                 path: '/users/new',

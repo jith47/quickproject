@@ -14,17 +14,18 @@ import {
 	useColorModeValue
 } from '@chakra-ui/react';
 // Custom Components
-import { ItemContent } from 'components/menu/ItemContent';
-import { SearchBar } from 'components/navbar/searchBar/SearchBar';
-import { SidebarResponsive } from 'components/sidebar/Sidebar';
+import { ItemContent } from '/src/components/menu/ItemContent.jsx';
+import { SearchBar } from '/src/components/navbar/searchBar/SearchBar.jsx';
+import { SidebarResponsive } from '/src/views/sidebar/Sidebar.jsx';
 import PropTypes from 'prop-types';
 import React from 'react';
 // Assets
-import navImage from 'assets/img/layout/Navbar.png';
+import navImage from '/src/assets/img/layout/Navbar.png';
 import { MdNotificationsNone, MdInfoOutline } from 'react-icons/md';
 import { FaEthereum } from 'react-icons/fa';
-import routes from 'routes.jsx';
-import { ThemeEditor } from './ThemeEditor';
+import routes from '/src/router.jsx';
+// import { ThemeEditor } from './ThemeEditor.jsx';
+
 export default function HeaderLinks(props) {
 	const { secondary } = props;
 	// Chakra Color Mode
@@ -164,7 +165,7 @@ export default function HeaderLinks(props) {
         </MenuList>
       </Menu>
 
-			<ThemeEditor navbarIcon={navbarIcon} />
+			{/* <ThemeEditor navbarIcon={navbarIcon} /> */}
 
 			<Menu>
 				<MenuButton p="0px">

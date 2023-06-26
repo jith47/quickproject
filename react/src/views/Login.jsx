@@ -63,16 +63,16 @@
 
 //design 2
 import { React, useRef, useState } from 'react';
-import {
-  MDBBtn,
-  MDBRow,
-  MDBCol,
-  MDBCard,
-  MDBCardBody,
-  MDBInput,
-  MDBIcon
-}
-from 'mdb-react-ui-kit';
+// import {
+//   MDBBtn,
+//   MDBRow,
+//   MDBCol,
+//   MDBCard,
+//   MDBCardBody,
+//   MDBInput,
+//   MDBIcon
+// }
+// from 'mdb-react-ui-kit';
 // import styles from '../css/Login.css';
 import { Link, Navigate, Outlet } from "react-router-dom";
 import axiosClient from '../axios-client';

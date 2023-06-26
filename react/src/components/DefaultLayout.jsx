@@ -1,6 +1,6 @@
 import { Link, Navigate, Outlet } from "react-router-dom";
 import { useStateContext } from "../context/ContextProvider";
-import { MDBContainer } from 'mdb-react-ui-kit';
+// import { MDBContainer } from 'mdb-react-ui-kit';
 import axiosClient from '../axios-client';
 import { useEffect } from "react";
 import {
@@ -15,7 +15,6 @@ import {
   DrawerContent,
   DrawerCloseButton,
 } from "@chakra-ui/react";
-import router from "/src/router.jsx";
 import PropTypes from "prop-types";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import SidebarContent from "/src/views/sidebar/components/Content.jsx";
@@ -46,12 +45,12 @@ function DefaultLayout() {
 
   // Call the setCsrfToken function before making any other Axios requests
   // setCsrfToken();
-  let menuBg = useColorModeValue('white', 'navy.800');
-  const { secondary } = router.routes;
-  const shadow = useColorModeValue(
-    '14px 17px 40px 4px rgba(112, 144, 176, 0.18)',
-    '14px 17px 40px 4px rgba(112, 144, 176, 0.06)'
-  );
+  // let menuBg = useColorModeValue('white', 'navy.800');
+  // const { secondary } = router.routes;
+  // const shadow = useColorModeValue(
+  //   '14px 17px 40px 4px rgba(112, 144, 176, 0.18)',
+  //   '14px 17px 40px 4px rgba(112, 144, 176, 0.06)'
+  // );
 
   useEffect(() => {
     axiosClient.get('/user')
@@ -70,7 +69,7 @@ function DefaultLayout() {
   }
   return (
     <div id="defaultLayout">
-      <Layout1 routes={router.routes}/>
+      <Layout1 >
         {/* <Box>
         <Box>
             <SearchBar routes={router.routes} />
@@ -91,11 +90,11 @@ function DefaultLayout() {
               </header>
             </div> */}
         <main>
-          <MDBContainer fluid>
+          {/* <MDBContainer fluid> */}
             <Outlet />
-          </MDBContainer>
+          {/* </MDBContainer> */}
         </main>
-      {/* </Layout1> */}
+      </Layout1>
     </div>
 
   );

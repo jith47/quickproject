@@ -12,6 +12,9 @@ import router from '/src/router.jsx';
 // Custom Chakra theme
 export default function Layout1(props) {
 	const { ...rest } = props;
+	const routes = router.routes[0].children.filter((r) => {
+		return r.cat == 1;
+	});
 	// states and functions
 	const [ fixed ] = useState(false);
 	const [ toggleSidebar, setToggleSidebar ] = useState(false);
@@ -33,7 +36,8 @@ export default function Layout1(props) {
 					return categoryActiveRoute;
 				}
 			} else {
-				if (window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1) {
+				// if (window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1) {
+				if (window.location.href.indexOf(routes[i].path) !== -1) {
 					return routes[i].name;
 				}
 			}
@@ -54,7 +58,8 @@ export default function Layout1(props) {
 					return categoryActiveNavbar;
 				}
 			} else {
-				if (window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1) {
+				// if (window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1) {
+				if (window.location.href.indexOf(routes[i].path) !== -1) {
 					return routes[i].secondary;
 				}
 			}
@@ -75,7 +80,8 @@ export default function Layout1(props) {
 					return categoryActiveNavbar;
 				}
 			} else {
-				if (window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1) {
+				if (window.location.href.indexOf(routes[i].path) !== -1) {
+					// if (window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1) {
 					return routes[i].messageNavbar;
 				}
 			}
@@ -84,9 +90,9 @@ export default function Layout1(props) {
 	};
 	const getRoutes = (routes) => {
 		return routes.map((prop, key) => {
-			if (prop.layout === '/admin') {
-				return <Route path={prop.layout + prop.path} component={prop.component} key={key} />;
-			}
+			// if (prop.layout === '/admin') {
+			// 	return <Route path={prop.layout + prop.path} component={prop.component} key={key} />;
+			// }
 			if (prop.collapse) {
 				return getRoutes(prop.items);
 			}
@@ -108,7 +114,7 @@ export default function Layout1(props) {
 						toggleSidebar,
 						setToggleSidebar
 					}}>
-					<Sidebar routes={props} display='none' {...rest} />
+					<Sidebar routes={routes} display='none' {...rest} />
 					<Box
 						float='right'
 						minHeight='100vh'
@@ -126,10 +132,10 @@ export default function Layout1(props) {
 							<Box>
 								<Navbar
 									onOpen={onOpen}
-									logoText={'Horizon UI Dashboard PRO'}
-									brandText={getActiveRoute(props)}
-									secondary={getActiveNavbar(props)}
-									message={getActiveNavbarText(props)}
+									logoText={'Laravel React'}
+									brandText={getActiveRoute(routes)}
+									secondary={getActiveNavbar(routes)}
+									message={getActiveNavbarText(routes)}
 									fixed={fixed}
 									{...rest}
 								/>
@@ -138,10 +144,10 @@ export default function Layout1(props) {
 
 						{getRoute() ? (
 							<Box mx='auto' p={{ base: '20px', md: '30px' }} pe='20px' minH='100vh' pt='50px'>
-								{/* <Switch>
+								{/* <Switch> */}
 									{getRoutes(routes)}
-									<Redirect from='/' to='/admin/default' />
-								</Switch> */}
+									{/* <Redirect from='/' to='/admin/default' /> */}
+								{/* </Switch> */}
 							</Box>
 						) : null}
 						{/* <Box>
