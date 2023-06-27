@@ -28,7 +28,7 @@ const router = createBrowserRouter([
     // },
     {
         path: '/',
-        element: <Layout1 />,
+        element: <DefaultLayout />,
         layout: '/admin',
         children: [
             {

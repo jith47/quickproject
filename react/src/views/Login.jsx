@@ -63,16 +63,16 @@
 
 //design 2
 import { React, useRef, useState } from 'react';
-// import {
-//   MDBBtn,
-//   MDBRow,
-//   MDBCol,
-//   MDBCard,
-//   MDBCardBody,
-//   MDBInput,
-//   MDBIcon
-// }
-// from 'mdb-react-ui-kit';
+import {
+  MDBBtn,
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardBody,
+  MDBInput,
+  MDBIcon
+}
+from 'mdb-react-ui-kit';
 // import styles from '../css/Login.css';
 import { Link, Navigate, Outlet } from "react-router-dom";
 import axiosClient from '../axios-client';
@@ -111,7 +111,7 @@ function Login() {
     
     <form>
 
-      {/* <MDBRow className='d-flex justify-content-center align-items-center h-100'>
+      <MDBRow className='d-flex justify-content-center align-items-center h-100'>
         <MDBCol col='12'>
 
           <MDBCard className='bg-dark text-white my-5 mx-auto' style={{borderRadius: '1rem', maxWidth: '400px'}}>
@@ -148,7 +148,7 @@ function Login() {
           </MDBCard>
 
         </MDBCol>
-      </MDBRow> */}
+      </MDBRow>
       </form>
 
   );

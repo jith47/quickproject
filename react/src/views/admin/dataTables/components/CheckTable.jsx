@@ -87,7 +87,7 @@ export default function CheckTable(props) {
             </Tr>
           ))}
         </Thead>
-        <Tbody {...getTableBodyProps()}>
+        {/* <Tbody {...getTableBodyProps()}>
           {page.map((row, index) => {
             prepareRow(row);
             return (
@@ -146,7 +146,7 @@ export default function CheckTable(props) {
               </Tr>
             );
           })}
-        </Tbody>
+        </Tbody> */}
       </Table>
     </Card>
   );

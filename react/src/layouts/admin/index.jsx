@@ -8,6 +8,7 @@ import { SidebarContext } from '/src/context/SidebarContext.jsx';
 import React, { useState } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 import router from '/src/router.jsx';
+import { ContextProvider } from '../../context/ContextProvider';
 
 // Custom Chakra theme
 export default function Layout1(props) {
@@ -108,6 +109,8 @@ export default function Layout1(props) {
 	const { onOpen } = useDisclosure();
 	document.documentElement.dir = 'ltr';
 	return (
+		<ContextProvider>
+
 		<Box>
 			<Box>
 				<SidebarContext.Provider
@@ -162,5 +165,6 @@ export default function Layout1(props) {
 				</SidebarContext.Provider>
 			</Box>
 		</Box>
+		</ContextProvider>
 	);
 }
