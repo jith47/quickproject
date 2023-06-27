@@ -7,9 +7,19 @@ import GuestLayout from "./components/GuestLayout.jsx";
 import DefaultLayout from "./components/DefaultLayout.jsx";
 import Dashboard from "./views/Dashboard.jsx";
 import UserForm from "./views/Userform.jsx";
+import { Icon } from "@chakra-ui/react";
+
 // import Sidebar from "./views/sidebar/Sidebar.jsx";
 import Settings from "/src/views/admin/dataTables/index.jsx";
-
+import {
+    MdBarChart,
+    MdPerson,
+    MdHome,
+    MdLock,
+    MdOutlineShoppingCart,
+    MdPeopleAlt
+  } from "react-icons/md";
+import Layout1 from "./layouts/admin/index.jsx";
 
 const router = createBrowserRouter([
     // {
@@ -18,14 +28,14 @@ const router = createBrowserRouter([
     // },
     {
         path: '/',
-        element: <DefaultLayout />,
+        element: <Layout1 />,
         layout: '/admin',
         children: [
             {
                 name: 'Dashboard',
                 path: '/dashboard',
                 cat: 1,
-                icon: <i class="fas fa-home" ></i>,
+                icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
                 element: <Dashboard />
             },
             {
@@ -37,9 +47,8 @@ const router = createBrowserRouter([
                 name: 'Users',
                 path: '/users',
                 cat: 1, //sidebar
-                icon: <i class="fas fa-users"></i>,
-                // element: <Users />,
-                element: <DataTables />
+                icon: <Icon as={MdPeopleAlt} width='20px' height='20px' color='inherit' />,
+                element: <Users />,
             },
             {
                 path: '/users/new',

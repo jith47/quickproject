@@ -6,7 +6,7 @@ import Navbar from '/src/components/navbar/NavbarAdmin.jsx';
 import Sidebar from '/src/views/sidebar/Sidebar.jsx';
 import { SidebarContext } from '/src/context/SidebarContext.jsx';
 import React, { useState } from 'react';
-import { Route } from 'react-router-dom';
+import { Outlet, Route, Routes } from 'react-router-dom';
 import router from '/src/router.jsx';
 
 // Custom Chakra theme
@@ -91,16 +91,17 @@ export default function Layout1(props) {
 	const getRoutes = (routes) => {
 		return routes.map((prop, key) => {
 			// if (prop.layout === '/admin') {
-			// 	return <Route path={prop.layout + prop.path} component={prop.component} key={key} />;
+			// 	return <Route path={prop.path} component={prop.component} key={key} />;
 			// }
-			if (prop.collapse) {
-				return getRoutes(prop.items);
-			}
-			if (prop.category) {
-				return getRoutes(prop.items);
-			} else {
-				return null;
-			}
+			// if (prop.collapse) {
+			// 	return getRoutes(prop.items);
+			// }
+			// if (prop.category) {
+			// 	return getRoutes(prop.items);
+			// } else {
+			// 	return null;
+			// }
+			return <Route path={prop.path} element={prop.element} key={key} />;
 		});
 	};
 	document.documentElement.dir = 'ltr';
@@ -145,7 +146,11 @@ export default function Layout1(props) {
 						{getRoute() ? (
 							<Box mx='auto' p={{ base: '20px', md: '30px' }} pe='20px' minH='100vh' pt='50px'>
 								{/* <Switch> */}
+								<Routes>
 									{getRoutes(routes)}
+								</Routes>
+									{/* <Outlet /> */}
+
 									{/* <Redirect from='/' to='/admin/default' /> */}
 								{/* </Switch> */}
 							</Box>

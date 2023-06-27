@@ -26,6 +26,7 @@ import {
 import Sidebar from "../views/sidebar/Sidebar";
 import { SearchBar } from "./navbar/searchBar/SearchBar";
 import Layout1 from "../layouts/admin";
+import router from '/src/router.jsx';
 
 function DefaultLayout() {
   const { user, token, setUser, setToken } = useStateContext();
@@ -52,6 +53,9 @@ function DefaultLayout() {
   //   '14px 17px 40px 4px rgba(112, 144, 176, 0.06)'
   // );
 
+  // const routes = router.routes[0].children.filter((r) => {
+  //   return r.cat ==1;
+  // });
   useEffect(() => {
     axiosClient.get('/user')
       .then(({ data }) => {
@@ -69,14 +73,10 @@ function DefaultLayout() {
   }
   return (
     <div id="defaultLayout">
-      <Layout1 >
-        {/* <Box>
-        <Box>
-            <SearchBar routes={router.routes} />
 
-            <Sidebar routes={router.routes} /> */}
-        <Link to="/dashboard">Dashboard</Link>
-        <Link to="/users">Users</Link>
+            {/* <Sidebar routes={routes} /> */}
+        {/* <Link to="/dashboard">Dashboard</Link>
+        <Link to="/users">Users</Link> */}
         {/* <div className="content">
               <header>
               <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
@@ -89,12 +89,11 @@ function DefaultLayout() {
                 </div>
               </header>
             </div> */}
-        <main>
           {/* <MDBContainer fluid> */}
-            <Outlet />
+      <Layout1 />
+      {/* </Layout1> */}
+
           {/* </MDBContainer> */}
-        </main>
-      </Layout1>
     </div>
 
   );
