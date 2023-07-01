@@ -1,7 +1,8 @@
 import {
   Flex,
   Table,
-  Checkbox,
+  Progress,
+  Icon,
   Tbody,
   Td,
   Text,
@@ -21,11 +22,14 @@ import {
 // Custom components
 import Card from "/src/components/card/Card.jsx";
 import Menu from "/src/components/menu/MainMenu.jsx";
-export default function CheckTable(props) {
+
+// Assets
+import { MdCheckCircle, MdCancel, MdOutlineError } from "react-icons/md";
+export default function ColumnsTable(props) {
   const { columnsData, tableData } = props;
 
   const columns = useMemo(() => columnsData, [columnsData]);
-  const data = useMemo(() => tableData, [tableData]) ?? [];
+  const data = useMemo(() => tableData, [tableData]);
 
   const tableInstance = useTable(
     {
@@ -45,11 +49,10 @@ export default function CheckTable(props) {
     prepareRow,
     initialState,
   } = tableInstance;
-  initialState.pageSize = 11;
+  initialState.pageSize = 5;
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
-
   return (
     <Card
       direction='column'
@@ -62,7 +65,7 @@ export default function CheckTable(props) {
           fontSize='22px'
           fontWeight='700'
           lineHeight='100%'>
-          Check Table
+          Complex Table
         </Text>
         <Menu />
       </Flex>
@@ -95,46 +98,62 @@ export default function CheckTable(props) {
               <Tr {...row.getRowProps()} key={index}>
                 {row.cells.map((cell, index) => {
                   let data = "";
-                  if (cell.column.id === "name") {
+                  if (cell.column.Header === "NAME") {
+                    data = (
+                      <Text color={textColor} fontSize='sm' fontWeight='700'>
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === "STATUS") {
                     data = (
                       <Flex align='center'>
-                        {/* <Checkbox
-                          defaultChecked={cell.row.original.id}
-                          colorScheme='brandScheme'
-                          me='10px'
-                        /> */}
+                        <Icon
+                          w='24px'
+                          h='24px'
+                          me='5px'
+                          color={
+                            cell.value === "Approved"
+                              ? "green.500"
+                              : cell.value === "Disable"
+                              ? "red.500"
+                              : cell.value === "Error"
+                              ? "orange.500"
+                              : null
+                          }
+                          as={
+                            cell.value === "Approved"
+                              ? MdCheckCircle
+                              : cell.value === "Disable"
+                              ? MdCancel
+                              : cell.value === "Error"
+                              ? MdOutlineError
+                              : null
+                          }
+                        />
                         <Text color={textColor} fontSize='sm' fontWeight='700'>
-                          {cell.row.original.name}
+                          {cell.value}
                         </Text>
                       </Flex>
                     );
-                  } else if (cell.column.id === "email") {
+                  } else if (cell.column.Header === "DATE") {
+                    data = (
+                      <Text color={textColor} fontSize='sm' fontWeight='700'>
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === "PROGRESS") {
                     data = (
                       <Flex align='center'>
-                        <Text
-                          me='10px'
-                          color={textColor}
-                          fontSize='sm'
-                          fontWeight='700'>
-                          {cell.row.original.email}
-                        </Text>
+                        <Progress
+                          variant='table'
+                          colorScheme='brandScheme'
+                          h='8px'
+                          w='108px'
+                          value={cell.value}
+                        />
                       </Flex>
                     );
-                  } 
-                  // else if (cell.column.Header === "QUANTITY") {
-                  //   data = (
-                  //     <Text color={textColor} fontSize='sm' fontWeight='700'>
-                  //       {cell.value}
-                  //     </Text>
-                  //   );
-                  // } else if (cell.column.Header === "DATE") {
-                  //   data = (
-                  //     <Text color={textColor} fontSize='sm' fontWeight='700'>
-                  //       {cell.value}
-                  //     </Text>
-                  //   );
-                  // }
-                  {console.log(cell.column)}
+                  }
                   return (
                     <Td
                       {...cell.getCellProps()}

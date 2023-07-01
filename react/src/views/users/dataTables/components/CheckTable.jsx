@@ -62,7 +62,7 @@ export default function CheckTable(props) {
           fontSize='22px'
           fontWeight='700'
           lineHeight='100%'>
-          Check Table
+          Users Table
         </Text>
         <Menu />
       </Flex>

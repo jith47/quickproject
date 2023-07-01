@@ -2,55 +2,44 @@ import { useEffect } from "react"
 import { useState } from "react"
 import axiosClient from "../axios-client"
 import { Link, Navigate, Outlet } from "react-router-dom";
-import Settings from "./admin/dataTables";
+import UserList from "./users/dataTables";
 
 export default function Users() {
     const [users, setUsers] = useState([]);
+    const [metadata, setMeta] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         getUsers();
+        import('../css/Login.module.css')
+
     }, []);
 
     const getUsers = () => {
-        const fetchData = async () => {
-            setLoading(true);
-            try {
-              const response = await axiosClient.get('/users');
-              setUsers(response.data);
-            } catch (error) {
-              console.error('Error fetching users:', error);
-            } finally {
-              setLoading(false);
-            }
-          };
-      
-          fetchData();
+        axiosClient.get('/users')
+        .then((data) => {
+            setUsers(data.data.data)
+            setMeta(data.data)
+        }).catch((data) => {
+            console.log(data);
+        })
+            
     };
-
     return (
         <div>
             <div>Users</div>
-            <Settings
+            <UserList
                 columnsDataCheck={[
                     {
-                        Header: "NAME",
+                        Header: "Name",
                         accessor: "name",
                     },
                     {
-                        Header: "TECH",
-                        accessor: "tech",
-                    },
-                    {
-                        Header: "DATE",
-                        accessor: "date",
-                    },
-                    {
-                        Header: "PROGRESS",
-                        accessor: "progress",
-                    },
+                        Header: "Email",
+                        accessor: "email",
+                    }
                 ]}
-                tableDataCheck={{users}}
+                tableDataCheck={users ?? []}
             />
             <Link to="/users/new">Add new</Link>
         </div>

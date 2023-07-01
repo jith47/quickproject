@@ -1,5 +1,4 @@
 import axios from "axios";
-import { error } from "laravel-mix/src/Log";
 
 const axiosClient = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL + '/api',
@@ -14,7 +13,7 @@ axiosClient.interceptors.request.use((config) => {
     return config;
 })
 
-axios.interceptors.response.use((response) => {
+axiosClient.interceptors.response.use((response) => {
     return response;
 }, (error) => {
     const {response} = error;

@@ -1,7 +1,6 @@
 import {
   Flex,
   Table,
-  Checkbox,
   Tbody,
   Td,
   Text,
@@ -21,11 +20,11 @@ import {
 // Custom components
 import Card from "/src/components/card/Card.jsx";
 import Menu from "/src/components/menu/MainMenu.jsx";
-export default function CheckTable(props) {
+export default function ColumnsTable(props) {
   const { columnsData, tableData } = props;
 
   const columns = useMemo(() => columnsData, [columnsData]);
-  const data = useMemo(() => tableData, [tableData]) ?? [];
+  const data = useMemo(() => tableData, [tableData]);
 
   const tableInstance = useTable(
     {
@@ -45,11 +44,10 @@ export default function CheckTable(props) {
     prepareRow,
     initialState,
   } = tableInstance;
-  initialState.pageSize = 11;
+  initialState.pageSize = 5;
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
-
   return (
     <Card
       direction='column'
@@ -62,7 +60,7 @@ export default function CheckTable(props) {
           fontSize='22px'
           fontWeight='700'
           lineHeight='100%'>
-          Check Table
+          4-Column Table
         </Text>
         <Menu />
       </Flex>
@@ -95,20 +93,15 @@ export default function CheckTable(props) {
               <Tr {...row.getRowProps()} key={index}>
                 {row.cells.map((cell, index) => {
                   let data = "";
-                  if (cell.column.id === "name") {
+                  if (cell.column.Header === "NAME") {
                     data = (
                       <Flex align='center'>
-                        {/* <Checkbox
-                          defaultChecked={cell.row.original.id}
-                          colorScheme='brandScheme'
-                          me='10px'
-                        /> */}
                         <Text color={textColor} fontSize='sm' fontWeight='700'>
-                          {cell.row.original.name}
+                          {cell.value}
                         </Text>
                       </Flex>
                     );
-                  } else if (cell.column.id === "email") {
+                  } else if (cell.column.Header === "PROGRESS") {
                     data = (
                       <Flex align='center'>
                         <Text
@@ -116,25 +109,23 @@ export default function CheckTable(props) {
                           color={textColor}
                           fontSize='sm'
                           fontWeight='700'>
-                          {cell.row.original.email}
+                          {cell.value}%
                         </Text>
                       </Flex>
                     );
-                  } 
-                  // else if (cell.column.Header === "QUANTITY") {
-                  //   data = (
-                  //     <Text color={textColor} fontSize='sm' fontWeight='700'>
-                  //       {cell.value}
-                  //     </Text>
-                  //   );
-                  // } else if (cell.column.Header === "DATE") {
-                  //   data = (
-                  //     <Text color={textColor} fontSize='sm' fontWeight='700'>
-                  //       {cell.value}
-                  //     </Text>
-                  //   );
-                  // }
-                  {console.log(cell.column)}
+                  } else if (cell.column.Header === "QUANTITY") {
+                    data = (
+                      <Text color={textColor} fontSize='sm' fontWeight='700'>
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === "DATE") {
+                    data = (
+                      <Text color={textColor} fontSize='sm' fontWeight='700'>
+                        {cell.value}
+                      </Text>
+                    );
+                  }
                   return (
                     <Td
                       {...cell.getCellProps()}

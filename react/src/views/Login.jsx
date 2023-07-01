@@ -62,7 +62,7 @@
 
 
 //design 2
-import { React, useRef, useState } from 'react';
+import { React, useEffect, useRef, useState } from 'react';
 import {
   MDBBtn,
   MDBRow,
@@ -70,16 +70,22 @@ import {
   MDBCard,
   MDBCardBody,
   MDBInput,
-  MDBIcon
+  MDBIcon,
+  MDBContainer
 }
 from 'mdb-react-ui-kit';
-// import styles from '../css/Login.css';
+// import styles from '../css/Login.module.css';
 import { Link, Navigate, Outlet } from "react-router-dom";
 import axiosClient from '../axios-client';
 import { useStateContext } from '../context/ContextProvider';
 
 
 function Login() {
+
+  useEffect(() => {
+    import('../css/Login.module.css')
+  }, []);
+
   const emailRef = useRef()
   const passwordRef = useRef()
 
@@ -109,8 +115,8 @@ function Login() {
   }
   return (
     
-    <form>
-
+    <form onSubmit={onSubmit}>
+      <MDBContainer fluid>
       <MDBRow className='d-flex justify-content-center align-items-center h-100'>
         <MDBCol col='12'>
 
@@ -121,8 +127,8 @@ function Login() {
               <p className="text-white-50 mb-5">Please enter your login and password!</p>
               <MDBInput ref={emailRef} wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='Email address' id='formControlLg' type='email' size="lg"/>
               <MDBInput ref={passwordRef} wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='Password' id='formControlLg' type='password' size="lg"/>
-              <p className="small mb-3 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
-              <MDBBtn type="button" onClick={onSubmit} outline className='mx-2 px-5' color='white' size='lg'>
+              <p className="small mb-3 pb-lg-2"><a className="text-white-50" href="#!">Forgot password?</a></p>
+              <MDBBtn type="submit" outline className='mx-2 px-5' color='white' size='lg'>
                 Login
               </MDBBtn>
 
@@ -141,7 +147,7 @@ function Login() {
               </div>
 
               <div>
-                <p className="mb-0">Don't have an account? <Link to="/signup" class="text-white-50 fw-bold">Sign Up</Link></p>
+                <p className="mb-0">Don't have an account? <Link to="/signup" className="text-white-50 fw-bold">Sign Up</Link></p>
 
               </div>
             </MDBCardBody>
@@ -149,6 +155,7 @@ function Login() {
 
         </MDBCol>
       </MDBRow>
+      </MDBContainer>
       </form>
 
   );

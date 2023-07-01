@@ -1,7 +1,8 @@
+/* eslint-disable */
 import {
   Flex,
+  Progress,
   Table,
-  Checkbox,
   Tbody,
   Td,
   Text,
@@ -10,6 +11,10 @@ import {
   Tr,
   useColorModeValue,
 } from "@chakra-ui/react";
+// Custom components
+import Card from "/src/components/card/Card.jsx";
+import { AndroidLogo, AppleLogo, WindowsLogo } from "/src/components/icons/Icons.jsx";
+import Menu from "/src/components/menu/MainMenu.jsx";
 import React, { useMemo } from "react";
 import {
   useGlobalFilter,
@@ -18,14 +23,11 @@ import {
   useTable,
 } from "react-table";
 
-// Custom components
-import Card from "/src/components/card/Card.jsx";
-import Menu from "/src/components/menu/MainMenu.jsx";
-export default function CheckTable(props) {
+export default function DevelopmentTable(props) {
   const { columnsData, tableData } = props;
 
   const columns = useMemo(() => columnsData, [columnsData]);
-  const data = useMemo(() => tableData, [tableData]) ?? [];
+  const data = useMemo(() => tableData, [tableData]);
 
   const tableInstance = useTable(
     {
@@ -48,8 +50,8 @@ export default function CheckTable(props) {
   initialState.pageSize = 11;
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
+  const iconColor = useColorModeValue("secondaryGray.500", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
-
   return (
     <Card
       direction='column'
@@ -62,7 +64,7 @@ export default function CheckTable(props) {
           fontSize='22px'
           fontWeight='700'
           lineHeight='100%'>
-          Check Table
+          Development Table
         </Text>
         <Menu />
       </Flex>
@@ -95,20 +97,56 @@ export default function CheckTable(props) {
               <Tr {...row.getRowProps()} key={index}>
                 {row.cells.map((cell, index) => {
                   let data = "";
-                  if (cell.column.id === "name") {
+                  if (cell.column.Header === "NAME") {
+                    data = (
+                      <Text color={textColor} fontSize='sm' fontWeight='700'>
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === "TECH") {
                     data = (
                       <Flex align='center'>
-                        {/* <Checkbox
-                          defaultChecked={cell.row.original.id}
-                          colorScheme='brandScheme'
-                          me='10px'
-                        /> */}
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
-                          {cell.row.original.name}
-                        </Text>
+                        {cell.value.map((item, key) => {
+                          if (item === "apple") {
+                            return (
+                              <AppleLogo
+                                key={key}
+                                color={iconColor}
+                                me='16px'
+                                h='18px'
+                                w='15px'
+                              />
+                            );
+                          } else if (item === "android") {
+                            return (
+                              <AndroidLogo
+                                key={key}
+                                color={iconColor}
+                                me='16px'
+                                h='18px'
+                                w='16px'
+                              />
+                            );
+                          } else if (item === "windows") {
+                            return (
+                              <WindowsLogo
+                                key={key}
+                                color={iconColor}
+                                h='18px'
+                                w='19px'
+                              />
+                            );
+                          }
+                        })}
                       </Flex>
                     );
-                  } else if (cell.column.id === "email") {
+                  } else if (cell.column.Header === "DATE") {
+                    data = (
+                      <Text color={textColor} fontSize='sm' fontWeight='700'>
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === "PROGRESS") {
                     data = (
                       <Flex align='center'>
                         <Text
@@ -116,25 +154,18 @@ export default function CheckTable(props) {
                           color={textColor}
                           fontSize='sm'
                           fontWeight='700'>
-                          {cell.row.original.email}
+                          {cell.value}%
                         </Text>
+                        <Progress
+                          variant='table'
+                          colorScheme='brandScheme'
+                          h='8px'
+                          w='63px'
+                          value={cell.value}
+                        />
                       </Flex>
                     );
-                  } 
-                  // else if (cell.column.Header === "QUANTITY") {
-                  //   data = (
-                  //     <Text color={textColor} fontSize='sm' fontWeight='700'>
-                  //       {cell.value}
-                  //     </Text>
-                  //   );
-                  // } else if (cell.column.Header === "DATE") {
-                  //   data = (
-                  //     <Text color={textColor} fontSize='sm' fontWeight='700'>
-                  //       {cell.value}
-                  //     </Text>
-                  //   );
-                  // }
-                  {console.log(cell.column)}
+                  }
                   return (
                     <Td
                       {...cell.getCellProps()}
