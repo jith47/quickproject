@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -20,6 +21,18 @@ class UserController extends Controller
         return UserResource::collection(
             User::query()->orderBy('id', 'desc')->paginate(10)
         );
+    }
+
+    public function users(Request $request)
+    {
+        $users = User::with('type');
+        if ($request->has('type') && $request->type == 1)
+            $users = $users->where('type', $request->type);
+        $users = $users->orderBy('id', 'desc')->paginate(10);
+        return response()->json($users, 200);
+        // return UserResource::collection(
+        //     $users->orderBy('id', 'desc')->paginate(10)
+        // );
     }
 
     /**
@@ -44,7 +57,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $user = $user->load('type');
+        return response()->json($user, 200);
     }
 
     /**
@@ -74,5 +88,19 @@ class UserController extends Controller
     {
         $user->delete();
         return response('', 204);
+    }
+    public function companyUsers(Request $request)
+    {
+        $users = User::with('type');
+        if ($request->has('type') && $request->type)
+            $users = $users->where('type', $request->type);
+        if ($request->has('company_id') && $request->company_id)
+            $users = $users->where('company_id', $request->company_id);
+
+        $users = $users->orderBy('id', 'desc')->paginate(10);
+        return response()->json($users, 200);
+        // return UserResource::collection(
+        //     $users->orderBy('id', 'desc')->paginate(10)
+        // );
     }
 }

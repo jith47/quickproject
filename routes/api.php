@@ -30,6 +30,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('users', UserController::class);
+    Route::post('get_users', [UserController::class, 'users']);
+    Route::post('get_users_by_company', [UserController::class, 'companyUsers']);
 });
 // Route::prefix('V1')->group(function () {
 //     Route::apiResource('skills', SkillController::class);

@@ -134,8 +134,7 @@ export default function CheckTable(props) {
                   //     </Text>
                   //   );
                   // }
-                  {console.log(cell.column)}
-                  return (
+                 return (
                     <Td
                       {...cell.getCellProps()}
                       key={index}

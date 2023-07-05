@@ -2,6 +2,8 @@
 import { Portal, Box, useDisclosure, Text, Button, Link } from '@chakra-ui/react';
 // import Footer from 'components/footer/FooterAdmin.js';
 // Layout components
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import '/src/App.css'
 import Navbar from '/src/components/navbar/NavbarAdmin.jsx';
 import Sidebar from '/src/views/sidebar/Sidebar.jsx';
 import { SidebarContext } from '/src/context/SidebarContext.jsx';
@@ -9,6 +11,7 @@ import React, { useState } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 import router from '/src/router.jsx';
 import { ContextProvider } from '../../context/ContextProvider';
+import { MDBContainer } from 'mdb-react-ui-kit';
 
 // Custom Chakra theme
 export default function Layout1(props) {
@@ -110,7 +113,6 @@ export default function Layout1(props) {
 	document.documentElement.dir = 'ltr';
 	return (
 		<ContextProvider>
-
 		<Box>
 			<Box>
 				<SidebarContext.Provider
