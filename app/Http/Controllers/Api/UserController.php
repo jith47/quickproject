@@ -7,7 +7,9 @@ use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
+use App\Models\UserDetails;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -25,7 +27,8 @@ class UserController extends Controller
 
     public function users(Request $request)
     {
-        $users = User::with('type');
+        $users = User::with('type')
+            ->with('details');
         if ($request->has('type') && $request->type == 1)
             $users = $users->where('type', $request->type);
         $users = $users->orderBy('id', 'desc')->paginate(10);
@@ -102,5 +105,44 @@ class UserController extends Controller
         // return UserResource::collection(
         //     $users->orderBy('id', 'desc')->paginate(10)
         // );
+    }
+    public function updateProfilePic(Request $request)
+    {
+        $user_id = $request->user_id;
+        $full_path = '';
+        if ($request->hasFile('profile_pic')) {
+            $file = $request->file('profile_pic');
+            $file_size = $file->getSize();
+            $file_extension = $file->getClientOriginalExtension();
+            $validFileExtensions = ["jpg", "jpeg", "bmp", "gif", "png", 'mp4', 'mkv', 'avi'];
+            if (in_array($file_extension, $validFileExtensions)) {
+                $new_file_name = uniqid() . '_' . trim($file->getClientOriginalName());
+                // $destination_path = public_path('/../../public/media/messages');
+                // $file->move($destination_path, $new_file_name);
+
+                $fileName = $new_file_name;
+                $filePath = 'avatars/' . $fileName;
+                Storage::disk('public')->put($filePath, $file);
+                $full_path = url('/') . '/public/' . $filePath;
+                // $patht =  $string."/app/media/" . $new_file_name . '.' . $file_extension;
+                // $path = Storage::disk('s3')->put(''.$patht, $file,'public');
+
+            }
+        }
+        $user = UserDetails::where('user_id', $user_id)->first();
+        if ($full_path != null) {
+            $user->profile_pic = $full_path;
+            $user->save();
+        }
+        return response()->json($user, 200);
+    }
+    public function test() {
+        $user = UserDetails::all();
+        foreach($user as $usr) {
+            $usr->profile_pic = 'http://localhost:8000/' . $usr->profile_pic; 
+        $usr->cover = 'http://localhost:8000/' . $usr->cover; 
+        $usr->save();
+        }
+        
     }
 }

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\ServiceController;
 /*
 
 |--------------------------------------------------------------------------
@@ -22,6 +23,7 @@ Route::post('/signup', [AuthController::class, 'signup']);
 // Route::get('/sanctum/csrf-cookie', function (Request $request) {
 //     return response()->json(['message' => 'CSRF cookie set']);
 // });
+Route::get('test', [UserController::class, 'test']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
@@ -31,6 +33,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('users', UserController::class);
     Route::post('get_users', [UserController::class, 'users']);
+    Route::post('get_users_by_company', [UserController::class, 'companyUsers']);
+    Route::apiResource('services', ServiceController::class);
     Route::post('get_users_by_company', [UserController::class, 'companyUsers']);
 });
 // Route::prefix('V1')->group(function () {
