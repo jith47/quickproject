@@ -14,21 +14,23 @@ class UserDetailsFactory extends Factory
      */
     public function definition()
     {
-        $client = new Client();
-        $response = $client->request('GET', 'https://source.unsplash.com/random/200x200');
+        // $client = new Client();
+        // $response = $client->request('GET', 'https://source.unsplash.com/random/200x200');
     
-        $avatarPath = public_path('avatars/' . $this->faker->uuid . '.jpg');
-        file_put_contents($avatarPath, $response->getBody());
+        // $avatarPath = public_path('avatars/' . $this->faker->uuid . '.jpg');
+        // file_put_contents($avatarPath, $response->getBody());
     
-        $coverres =  $client->request('GET', 'https://source.unsplash.com/random/800x600');
+        // $coverres =  $client->request('GET', 'https://source.unsplash.com/random/800x600');
     
-        $coverPath = public_path('covers/' . $this->faker->uuid . '.jpg');
-        file_put_contents($coverPath, $coverres->getBody());
+        // $coverPath = public_path('covers/' . $this->faker->uuid . '.jpg');
+        // file_put_contents($coverPath, $coverres->getBody());
 
         return [
             'user_id' => $this->faker->unique()->numberBetween(1, 103),
-            'profile_pic' => 'avatars/' . basename($avatarPath),
-            'cover' => 'covers/' . basename($coverPath),
+            'profile_pic' => url('/') . '/avatars/' . basename($avatarPath),
+            'cover' => url('/') . '/covers/' . basename($coverPath),
+            'address' => $this->faker->address()
         ];
+        
     }
 }

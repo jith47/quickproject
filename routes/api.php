@@ -36,6 +36,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('get_users_by_company', [UserController::class, 'companyUsers']);
     Route::apiResource('services', ServiceController::class);
     Route::post('get_users_by_company', [UserController::class, 'companyUsers']);
+    Route::post('profile_pic', [UserController::class, 'updateProfilePic']);
+
 });
 // Route::prefix('V1')->group(function () {
 //     Route::apiResource('skills', SkillController::class);

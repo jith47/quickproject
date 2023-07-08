@@ -10,6 +10,7 @@ use App\Http\Resources\UserResource;
 use App\Models\UserDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class UserController extends Controller
 {
@@ -60,7 +61,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $user = $user->load('type');
+        $user = $user->load(['type', 'details', 'likes', 'givenBy']);
         return response()->json($user, 200);
     }
 
@@ -110,6 +111,8 @@ class UserController extends Controller
     {
         $user_id = $request->user_id;
         $full_path = '';
+        $user = UserDetails::where('user_id', $user_id)->first();
+
         if ($request->hasFile('profile_pic')) {
             $file = $request->file('profile_pic');
             $file_size = $file->getSize();
@@ -119,30 +122,33 @@ class UserController extends Controller
                 $new_file_name = uniqid() . '_' . trim($file->getClientOriginalName());
                 // $destination_path = public_path('/../../public/media/messages');
                 // $file->move($destination_path, $new_file_name);
-
+                
                 $fileName = $new_file_name;
                 $filePath = 'avatars/' . $fileName;
                 Storage::disk('public')->put($filePath, $file);
                 $full_path = url('/') . '/public/' . $filePath;
                 // $patht =  $string."/app/media/" . $new_file_name . '.' . $file_extension;
                 // $path = Storage::disk('s3')->put(''.$patht, $file,'public');
-
+                if ($user->profile_pic != null) {
+                    if (File::exists($user->profile_pic)) {
+                        File::delete($image_path);
+                    }
+                }
             }
         }
-        $user = UserDetails::where('user_id', $user_id)->first();
         if ($full_path != null) {
             $user->profile_pic = $full_path;
             $user->save();
         }
         return response()->json($user, 200);
     }
-    public function test() {
-        $user = UserDetails::all();
-        foreach($user as $usr) {
-            $usr->profile_pic = 'http://localhost:8000/' . $usr->profile_pic; 
-        $usr->cover = 'http://localhost:8000/' . $usr->cover; 
-        $usr->save();
-        }
+    // public function test() {
+    //     $user = UserDetails::all();
+    //     foreach($user as $usr) {
+    //         $usr->profile_pic = 'http://localhost:8000/' . $usr->profile_pic; 
+    //     $usr->cover = 'http://localhost:8000/' . $usr->cover; 
+    //     $usr->save();
+    //     }
         
-    }
+    // }
 }

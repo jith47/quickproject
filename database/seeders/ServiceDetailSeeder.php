@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class ServiceSeeder extends Seeder
+class ServiceDetailSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,6 +13,6 @@ class ServiceSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Service::factory(50)->create();
+        \App\Models\ServiceDetail::factory(50)->create();
     }
 }

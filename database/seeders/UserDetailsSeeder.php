@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Faker\Generator as Faker;
+use Faker\Factory as Faker;
 use Illuminate\Support\Facades\Storage;
-
+use DB;
 class UserDetailsSeeder extends Seeder
 {
     /**
@@ -37,5 +37,7 @@ class UserDetailsSeeder extends Seeder
         //     ]);
         // }
         \App\Models\UserDetails::factory(50)->create();
+        // DB::table('user_details')
+        // ->update(['address' => $faker->address]);
     }
 }
