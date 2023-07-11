@@ -24,6 +24,8 @@ class CreateServicesTable extends Migration
             $table->integer('report_id')->nullable();
             $table->integer('quote_id')->nullable();
             $table->integer('invoice_id')->nullable();
+            $table->integer('company_id')->nullable();
+            $table->date('closed_at')->nullable();
             $table->timestamps();
         });
     }

@@ -27,7 +27,8 @@ class ServiceFactory extends Factory
             'service_for' => $this->faker->randomElement($consumer),
             'report_id' => $this->faker->numberBetween(1, 20),
             'quote_id' => $this->faker->numberBetween(1, 20),
-            'invoice_id' => $this->faker->numberBetween(1, 20)
+            'invoice_id' => $this->faker->numberBetween(1, 20),
+            'company_id' => $this->faker->numberBetween(1, 10)
         ];
     }
 }

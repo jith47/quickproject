@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\ServiceTechnician;
 use App\Http\Requests\StoreServiceTechnicianRequest;
 use App\Http\Requests\UpdateServiceTechnicianRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ServiceTechnicianController extends Controller
 {
+    protected $auth;	
+
+    public function __construct()
+    {
+        $this->auth = Auth::user();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +23,16 @@ class ServiceTechnicianController extends Controller
      */
     public function index()
     {
-        //
+        // return $this->auth;
+        $company_id = Auth::user()->company_id;
+        $techs = ServiceTechnician::whereHas('service', function($q) use ($company_id) {
+                $q->where('company_id',  $company_id);
+            })->with(['user' => function ($q) {
+                $q->with('details')->with('likes');
+            }])
+            ->get();
+
+        return response()->json($techs, 200);
     }
 
     /**
@@ -82,5 +99,22 @@ class ServiceTechnicianController extends Controller
     public function destroy(ServiceTechnician $serviceTechnician)
     {
         //
+    }
+    public function mostliked()
+    {
+        // return $this->auth;
+        $company_id = Auth::user()->company_id;
+        $techs = ServiceTechnician::whereHas('service', function($q) use ($company_id) {
+                $q->where('company_id',  $company_id);
+            })->with(['user' => function ($q) {
+                $q->with('details')->withCount('likes');
+            }])
+            ->get()->sortBy(function ($tech) {
+                return $tech->user->likes_count;
+            })->toArray();
+
+            
+
+        return response()->json(array_reverse($techs), 200);
     }
 }

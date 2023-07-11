@@ -52,10 +52,14 @@ class User extends Authenticatable
     }
 
     public function likes() {
-        return $this->hasOne('App\Models\Fun', 'user_id', 'id');
+        return $this->hasMany('App\Models\Fun', 'user_id', 'id');
     }
 
     public function givenBy() {
         return $this->hasOne('App\Models\Fun', 'user_id', 'id')->where('given_by', Auth::user()->id);
+    }
+
+    public function comments() {
+        return $this->hasMany('App\Models\ServiceComment', 'user_id', 'id');
     }
 }

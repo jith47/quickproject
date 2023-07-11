@@ -6,6 +6,8 @@ use App\Http\Controllers\SkillController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ServiceTechnicianController;
+use App\Http\Controllers\FunController;
 /*
 
 |--------------------------------------------------------------------------
@@ -37,12 +39,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('services', ServiceController::class);
     Route::post('get_users_by_company', [UserController::class, 'companyUsers']);
     Route::post('profile_pic', [UserController::class, 'updateProfilePic']);
-
+    Route::apiResource('technician', ServiceTechnicianController::class);
+    Route::get('mostliked', [ServiceTechnicianController::class, 'mostliked']);
+    Route::get('recentlyclosed', [ServiceController::class, 'recentlyclosed']);
+    Route::get('weeklyreaction', [FunController::class, 'weeklyreaction']);
 });
-// Route::prefix('V1')->group(function () {
-//     Route::apiResource('skills', SkillController::class);
-// });
-// Route::group(['prefix' => 'V1'], function () {
-// });
 
 

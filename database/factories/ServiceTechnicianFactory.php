@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
 
 class ServiceTechnicianFactory extends Factory
 {
@@ -13,8 +14,10 @@ class ServiceTechnicianFactory extends Factory
      */
     public function definition()
     {
-        return [
-            //
-        ];
+        // $users = User::all();
+
+        // return [
+        //     'user_id' => $this->faker->randomElement($users->id),
+        // ];
     }
 }
